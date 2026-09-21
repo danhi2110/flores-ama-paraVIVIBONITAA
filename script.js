@@ -8,16 +8,16 @@ const CONFIG = {
   // Las 10 canciones. Cambia el "titulo" (lo que se ve) y guarda cada archivo
   // en la carpeta "musica" con el nombre que pongas en "archivo".
   canciones: [
-    { titulo: "La Correcta - Morat_Nabáles",  archivo: "musica/cancion-1.mp3" },
-    { titulo: "Mi Nuevo Vicio - Morat",  archivo: "musica/cancion-2.mp3" },
-    { titulo: "No Se Va - Morat",  archivo: "musica/cancion-3.mp3" },
-    { titulo: "A Dónde Vamos - Morat",  archivo: "musica/cancion-4.mp3" },
-    { titulo: "Aprender A Quererte - Morat",  archivo: "musica/cancion-5.mp3" },
-    { titulo: "Pero Te Conoci - Reik",  archivo: "musica/cancion-6.mp3" },
-    { titulo: "Yo Quisiera - Reik",  archivo: "musica/cancion-7.mp3" },
-    { titulo: "Inolvidable - Reik",  archivo: "musica/cancion-8.mp3" },
-    { titulo: "Salvavidas - TIMØ_Bacilos",  archivo: "musica/cancion-9.mp3" },
-    { titulo: "Por Si Vuelves - Charlie USG", archivo: "musica/cancion-10.mp3" }
+    { titulo: "La Correcta - Morat_Nabáles",  archivo: "cancion-1.mp3" },
+    { titulo: "Mi Nuevo Vicio - Morat",  archivo: "cancion-2.mp3" },
+    { titulo: "No Se Va - Morat",  archivo: "cancion-3.mp3" },
+    { titulo: "A Dónde Vamos - Morat",  archivo: "cancion-4.mp3" },
+    { titulo: "Aprender A Quererte - Morat",  archivo: "cancion-5.mp3" },
+    { titulo: "Pero Te Conoci - Reik",  archivo: "cancion-6.mp3" },
+    { titulo: "Yo Quisiera - Reik",  archivo: "cancion-7.mp3" },
+    { titulo: "Inolvidable - Reik",  archivo: "cancion-8.mp3" },
+    { titulo: "Salvavidas - TIMØ_Bacilos",  archivo: "cancion-9.mp3" },
+    { titulo: "Por Si Vuelves - Charlie USG", archivo: "cancion-10.mp3" }
   ],
 
 mensaje: [
