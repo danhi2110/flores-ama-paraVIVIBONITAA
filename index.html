@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flores para Vivi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+</head>
+<body data-estado="listo">
+
+<div class="polen" id="polen" aria-hidden="true"></div>
+<div class="lluvia" id="lluvia" aria-hidden="true"></div>
+<div class="mariposas" id="mariposas" aria-hidden="true"></div>
+
+<main>
+  <h1 id="titulo">Flores para Vivi</h1>
+  <p class="sub">Hoy es el día de las flores amarillas según muchas personas, así que esta es la tuya.</p>
+
+  <button class="flor" id="flor" type="button" aria-label="Reproducir canción">
+    <svg viewBox="0 0 200 200" aria-hidden="true" focusable="false">
+      <defs>
+        <radialGradient id="cc" cx="50%" cy="42%" r="65%">
+          <stop offset="0" stop-color="#8A5518"/>
+          <stop offset="1" stop-color="#3A1F06"/>
+        </radialGradient>
+      </defs>
+
+      <circle class="onda" cx="100" cy="100" r="98" fill="none" stroke="#FFE27A" stroke-width="1.5"/>
+      <circle class="onda o2" cx="100" cy="100" r="98" fill="none" stroke="#FFE27A" stroke-width="1.5"/>
+
+      <g class="orbita" id="orbita"></g>
+
+      <g class="capas">
+        <g class="capa capa-a" id="petalos-atras"></g>
+        <g class="capa capa-b" id="petalos-frente"></g>
+      </g>
+
+      <g class="centro">
+        <circle cx="100" cy="100" r="38" fill="url(#cc)"/>
+        <circle cx="100" cy="100" r="38" fill="none" stroke="#FFE27A" stroke-opacity=".4" stroke-width="2"/>
+        <path class="i-play" d="M91 82 L120 100 L91 118 Z" fill="#FFE27A" stroke="#FFE27A" stroke-width="4" stroke-linejoin="round"/>
+        <g class="i-pausa" fill="#FFE27A">
+          <rect x="86" y="83" width="10" height="34" rx="3"/>
+          <rect x="104" y="83" width="10" height="34" rx="3"/>
+        </g>
+      </g>
+    </svg>
+  </button>
+
+  <p class="tema" id="tema">Canción 1</p>
+  <p class="aviso" id="aviso" role="status">Toca la flor para escuchar.</p>
+
+  <div class="controles" id="controles">
+    <span class="tiempo" id="tActual">0:00</span>
+    <input type="range" id="progreso" min="0" max="1000" value="0" aria-label="Progreso de la canción">
+    <span class="tiempo" id="tTotal">0:00</span>
+  </div>
+
+  <div class="transporte">
+    <button class="icono" id="anterior" type="button" aria-label="Canción anterior">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M6 5h2v14H6zM20 5v14L9 12z"/></svg>
+    </button>
+    <button class="icono" id="siguiente" type="button" aria-label="Canción siguiente">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M16 5h2v14h-2zM4 5v14l11-7z"/></svg>
+    </button>
+  </div>
+
+  <div class="acciones">
+    <button class="boton boton-principal" id="btnCarta" type="button" aria-expanded="false" aria-controls="carta">Leer mi mensaje</button>
+  </div>
+
+  <section class="carta" id="carta" hidden aria-label="Mensaje para Vivi"></section>
+
+  <section class="lista-caja" aria-labelledby="lista-titulo">
+    <h2 id="lista-titulo">Canciones para ti</h2>
+    <ol class="lista" id="lista"></ol>
+  </section>
+</main>
+
+<footer class="jardin" id="jardin" aria-hidden="true"></footer>
+
+<script src="script.js"></script>
+</body>
+</html>

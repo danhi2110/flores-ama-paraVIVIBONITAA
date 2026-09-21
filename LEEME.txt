@@ -1,0 +1,8 @@
+Flores amarillas para Vivi
+
+1. Guarda tus 10 canciones dentro de la carpeta "musica" con estos nombres:
+   cancion-1.mp3, cancion-2.mp3 ... cancion-10.mp3
+2. Abre index.html en tu navegador.
+3. Para cambiar los nombres que se ven en la lista, el mensaje o la firma,
+   edita el bloque CONFIG al inicio de script.js.
+   (Si tus archivos tienen otro nombre o formato, cambia tambien el campo "archivo".)

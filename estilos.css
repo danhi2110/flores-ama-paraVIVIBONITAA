@@ -1,0 +1,416 @@
+:root{
+  --noche:#0E2B22;
+  --hoja:#1F5A3F;
+  --girasol:#F7C51E;
+  --polen:#FFE27A;
+  --luz:#FFF6D6;
+  --serif:"Fraunces","Iowan Old Style",Georgia,serif;
+  --sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+html,body{margin:0}
+body{
+  min-height:100vh;
+  min-height:100dvh;
+  background:
+    radial-gradient(70% 42% at 50% 24%, rgba(247,197,30,.22), transparent 72%),
+    linear-gradient(180deg,#0E2B22 0%,#0A2019 100%);
+  background-attachment:fixed;
+  color:var(--luz);
+  font-family:var(--sans);
+  line-height:1.6;
+  padding-top:max(28px,env(safe-area-inset-top));
+  overflow-x:hidden;
+}
+main{
+  max-width:560px;
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  position:relative;
+  z-index:2;
+}
+
+/* ---------- Título ---------- */
+h1{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:clamp(2.2rem,9.5vw,3.5rem);
+  line-height:1.1;
+  letter-spacing:-.01em;
+  margin:12px 0 10px;
+  text-wrap:balance;
+}
+.palabra{display:inline-block;white-space:nowrap}
+.palabra.nombre{color:var(--polen)}
+.letra{
+  display:inline-block;
+  animation:sube .8s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay:calc(var(--k) * 45ms + 100ms);
+}
+@keyframes sube{from{opacity:0;transform:translateY(.7em) rotate(4deg)}to{opacity:1;transform:none}}
+.sub{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.2rem;
+  color:var(--polen);
+  margin:0;
+  text-wrap:balance;
+  animation:aparece 1s ease both;
+  animation-delay:1.2s;
+}
+
+/* ---------- La flor es el botón de reproducir ---------- */
+.flor{
+  --tam:min(76vw,330px);
+  width:var(--tam);
+  height:var(--tam);
+  margin:44px 0 26px;
+  padding:0;
+  border:0;
+  border-radius:50%;
+  background:none;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  filter:drop-shadow(0 14px 34px rgba(247,197,30,.28));
+  transition:transform .35s cubic-bezier(.2,.9,.3,1.2);
+}
+.flor:hover{transform:scale(1.03)}
+.flor:active{transform:scale(.97)}
+.flor svg{display:block;width:100%;height:100%;overflow:visible}
+.flor:focus-visible{outline:3px solid var(--polen);outline-offset:10px}
+
+.capas{transform-origin:100px 100px}
+.capa{transform-origin:100px 100px}
+.capa-a{animation:giro 70s linear infinite paused}
+.capa-b{animation:giro 100s linear infinite reverse paused}
+.p{
+  transform-origin:100px 100px;
+  animation:abrir 1s cubic-bezier(.2,.9,.3,1.15) both;
+  animation-delay:calc(var(--i) * 55ms + 200ms);
+}
+.centro{
+  transform-origin:100px 100px;
+  animation:abrir 1s cubic-bezier(.2,.9,.3,1.15) both;
+  animation-delay:1.5s;
+}
+@keyframes abrir{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes giro{to{transform:rotate(360deg)}}
+@keyframes latido{0%,100%{transform:scale(1)}50%{transform:scale(1.045)}}
+@keyframes onda{0%{transform:scale(1);opacity:.55}100%{transform:scale(1.5);opacity:0}}
+
+.onda{opacity:0;transform-origin:100px 100px}
+.orbita{opacity:0;transform-origin:100px 100px;transition:opacity 1s ease}
+
+.i-play,.i-pausa{display:none}
+body[data-estado="listo"] .i-play{display:block}
+body[data-estado="sonando"] .i-pausa{display:block}
+
+body[data-estado="sonando"] .capa-a,
+body[data-estado="sonando"] .capa-b{animation-play-state:running}
+body[data-estado="sonando"] .capas{animation:latido 3.4s ease-in-out infinite}
+body[data-estado="sonando"] .onda{animation:onda 3.6s ease-out infinite}
+body[data-estado="sonando"] .onda.o2{animation-delay:1.8s}
+body[data-estado="sonando"] .orbita{opacity:1;animation:giro 14s linear infinite}
+
+/* ---------- Ambiente: polen, pétalos, mariposas ---------- */
+.polen,.lluvia{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+.polen i{
+  position:absolute;
+  bottom:-12px;
+  left:var(--x);
+  width:var(--s);
+  height:var(--s);
+  border-radius:50%;
+  background:radial-gradient(circle,#FFF6D6 0,#FFE27A 40%,rgba(255,226,122,0) 70%);
+  opacity:0;
+  animation:subir var(--t) ease-in-out var(--d) infinite;
+}
+@keyframes subir{
+  0%{transform:translate(0,0);opacity:0}
+  15%{opacity:.75}
+  85%{opacity:.5}
+  100%{transform:translate(var(--dx),-105vh);opacity:0}
+}
+
+.lluvia{opacity:0;transition:opacity 1.4s ease}
+body[data-estado="sonando"] .lluvia{opacity:1}
+.lluvia i,.lluvia b{
+  position:absolute;
+  top:0;
+  left:var(--x);
+  animation:caer var(--t) linear var(--d) infinite;
+}
+.lluvia i{
+  width:var(--s);
+  height:calc(var(--s) * 1.5);
+  background:var(--c);
+  border-radius:100% 0 100% 0;
+  opacity:.85;
+}
+.lluvia b{color:var(--c);line-height:0;font-weight:400}
+.lluvia b svg{width:var(--s);height:var(--s);display:block}
+@keyframes caer{
+  0%{transform:translate3d(0,-10vh,0) rotate(0deg)}
+  50%{transform:translate3d(30px,55vh,0) rotate(200deg)}
+  100%{transform:translate3d(-24px,112vh,0) rotate(400deg)}
+}
+
+.mariposa{
+  position:fixed;
+  top:0;
+  left:0;
+  width:34px;
+  z-index:3;
+  pointer-events:none;
+  animation:vuelo1 36s ease-in-out -6s infinite;
+}
+.mariposa.m2{width:26px;animation-name:vuelo2;animation-duration:44s;animation-delay:-20s}
+.mariposa.m3{width:30px;animation-name:vuelo3;animation-duration:40s;animation-delay:-30s}
+.mariposa svg{display:block;width:100%;height:auto;overflow:visible}
+.ala{transform-origin:20px 15px;animation:aleteo .28s ease-in-out infinite alternate}
+@keyframes aleteo{from{transform:scaleX(1)}to{transform:scaleX(.2)}}
+@keyframes vuelo1{
+  0%{transform:translate(-12vw,68vh)}
+  20%{transform:translate(22vw,50vh)}
+  40%{transform:translate(48vw,72vh)}
+  60%{transform:translate(70vw,38vh)}
+  80%{transform:translate(92vw,58vh)}
+  100%{transform:translate(112vw,42vh)}
+}
+@keyframes vuelo2{
+  0%{transform:translate(112vw,22vh)}
+  25%{transform:translate(80vw,40vh)}
+  50%{transform:translate(52vw,20vh)}
+  75%{transform:translate(24vw,46vh)}
+  100%{transform:translate(-12vw,30vh)}
+}
+@keyframes vuelo3{
+  0%{transform:translate(30vw,112vh)}
+  30%{transform:translate(18vw,70vh)}
+  60%{transform:translate(60vw,44vh)}
+  100%{transform:translate(78vw,-12vh)}
+}
+
+/* ---------- Reproductor ---------- */
+.tema{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:1.35rem;
+  margin:0;
+  overflow-wrap:anywhere;
+}
+.aviso{
+  min-height:1.7em;
+  margin:2px 0 0;
+  font-size:.95rem;
+  color:rgba(255,246,214,.8);
+  text-wrap:balance;
+}
+.controles{
+  width:100%;
+  max-width:380px;
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.tiempo{
+  font-size:.85rem;
+  font-variant-numeric:tabular-nums;
+  min-width:2.9em;
+  color:rgba(255,246,214,.8);
+}
+.tiempo:first-child{text-align:right}
+.tiempo:last-child{text-align:left}
+input[type=range]{
+  --pista:linear-gradient(to right,var(--girasol) var(--p,0%),rgba(255,246,214,.22) var(--p,0%));
+  flex:1;
+  min-width:0;
+  height:28px;
+  margin:0;
+  background:transparent;
+  -webkit-appearance:none;
+  appearance:none;
+  cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:var(--pista)}
+input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:var(--pista)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;border-radius:50%;border:0;background:var(--polen)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;border:0;background:var(--polen)}
+input[type=range]:focus-visible{outline:3px solid var(--polen);outline-offset:4px;border-radius:8px}
+
+.transporte{display:flex;gap:20px;margin-top:12px}
+.icono{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:2px solid rgba(255,226,122,.5);
+  background:transparent;
+  color:var(--polen);
+  cursor:pointer;
+  transition:background-color .15s ease,transform .15s ease;
+}
+.icono:hover{background:rgba(255,226,122,.14)}
+.icono:active{transform:scale(.92)}
+.icono:focus-visible{outline:3px solid var(--polen);outline-offset:4px}
+
+.acciones{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:26px}
+.boton{
+  font:inherit;
+  font-weight:700;
+  padding:13px 28px;
+  border-radius:999px;
+  cursor:pointer;
+  border:2px solid var(--girasol);
+  transition:transform .15s ease,background-color .15s ease;
+}
+.boton:active{transform:scale(.97)}
+.boton:focus-visible{outline:3px solid var(--polen);outline-offset:4px}
+.boton-principal{background:var(--girasol);color:#2A1B00}
+.boton-principal:hover{background:var(--polen);border-color:var(--polen)}
+
+/* ---------- Mensaje ---------- */
+.carta{
+  width:100%;
+  margin-top:30px;
+  padding:30px 26px 32px;
+  text-align:left;
+  background:rgba(10,32,25,.82);
+  border:1px solid rgba(247,197,30,.4);
+  border-radius:22px;
+  scroll-margin-top:20px;
+}
+.carta p{
+  font-family:var(--serif);
+  font-size:1.15rem;
+  line-height:1.75;
+  margin:0 0 1.15em;
+  opacity:0;
+  animation:aparece .9s ease forwards;
+  animation-delay:calc(var(--n) * 850ms);
+}
+.carta .saludo{font-style:italic;font-size:1.4rem;color:var(--polen)}
+.carta .firma{margin:1.6em 0 0;font-style:italic;color:var(--polen);text-align:right}
+@keyframes aparece{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- Lista de canciones ---------- */
+.lista-caja{width:100%;margin-top:44px;text-align:left}
+.lista-caja h2{
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.5rem;
+  margin:0 0 14px;
+  text-align:center;
+}
+.lista{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.pista{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:13px 16px;
+  border-radius:14px;
+  border:1px solid rgba(255,226,122,.22);
+  background:rgba(10,32,25,.7);
+  color:inherit;
+  font:inherit;
+  text-align:left;
+  cursor:pointer;
+  transition:background-color .2s ease,border-color .2s ease;
+  animation:aparece .6s ease both;
+  animation-delay:calc(var(--n) * 70ms + 1.6s);
+}
+.pista:hover{background:rgba(255,226,122,.12)}
+.pista:focus-visible{outline:3px solid var(--polen);outline-offset:3px}
+.pista[aria-current="true"]{border-color:var(--girasol);background:rgba(247,197,30,.16)}
+.pista .num{font-family:var(--serif);font-style:italic;color:var(--polen);min-width:1.7em}
+.pista .nombre{flex:1;overflow-wrap:anywhere}
+.eq{display:none;align-items:flex-end;gap:3px;height:16px}
+.pista[aria-current="true"] .eq{display:flex}
+.eq i{
+  width:3px;
+  height:100%;
+  border-radius:2px;
+  background:var(--girasol);
+  transform-origin:bottom;
+  transform:scaleY(.3);
+  animation:eq .9s ease-in-out infinite alternate paused;
+}
+.eq i:nth-child(2){animation-delay:-.3s}
+.eq i:nth-child(3){animation-delay:-.6s}
+body[data-estado="sonando"] .eq i{animation-play-state:running}
+@keyframes eq{from{transform:scaleY(.25)}to{transform:scaleY(1)}}
+
+/* ---------- Jardín ---------- */
+.jardin{
+  --alto:clamp(170px,42vw,250px);
+  position:relative;
+  z-index:1;
+  margin-top:44px;
+  height:var(--alto);
+  padding-bottom:env(safe-area-inset-bottom);
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-around;
+  overflow:hidden;
+}
+.jardin::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:36px;
+  background:linear-gradient(to top,#1F5A3F,rgba(31,90,63,0));
+  pointer-events:none;
+}
+.planta{
+  flex:0 0 auto;
+  height:calc(var(--alto) * var(--k));
+  aspect-ratio:70 / 200;
+  margin:0 -8px;
+  transform-origin:50% 100%;
+  transform:scale(0);
+}
+.jardin.abierto .planta{
+  animation:crecer 1.5s cubic-bezier(.2,.9,.3,1.1) forwards;
+  animation-delay:var(--g);
+}
+@keyframes crecer{from{transform:scale(0)}to{transform:scale(1)}}
+.planta svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+  transform-origin:50% 100%;
+  animation:mecer var(--dur) ease-in-out var(--sd) infinite alternate;
+}
+@keyframes mecer{from{transform:rotate(-2.5deg)}to{transform:rotate(2.5deg)}}
+.cabeza{transform-origin:35px 40px}
+body[data-estado="sonando"] .cabeza{animation:cabeceo 1.8s ease-in-out var(--sd) infinite}
+@keyframes cabeceo{
+  0%,100%{transform:scale(1) rotate(0deg)}
+  50%{transform:scale(1.08) rotate(4deg)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .letra,.sub,.p,.centro,.capa-a,.capa-b,.capas,.onda,.orbita,.pista,.planta svg,.cabeza,.eq i{animation:none !important}
+  .planta{transform:none;animation:none !important}
+  .eq i{transform:scaleY(.7)}
+  .polen,.lluvia,.mariposas{display:none}
+  .carta p{animation:none;opacity:1}
+  .boton,.icono,.flor{transition:none}
+}
